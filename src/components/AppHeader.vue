@@ -18,12 +18,9 @@ const { isDark, toggleDarkMode } = useDarkMode()
           <li><router-link to="/blog">Blog</router-link></li>
           <li><router-link to="/contact">Contact</router-link></li>
           <li>
-            <CustomIcon @click="toggleDarkMode">
+            <CustomIcon active @click="toggleDarkMode">
               {{ isDark ? '🌙' : '☀️' }}
             </CustomIcon>
-          </li>
-          <li>
-            <CustomIcon active>☀️</CustomIcon>
           </li>
         </ul>
       </nav>
