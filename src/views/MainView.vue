@@ -10,8 +10,4 @@
 .main-content {
   padding-top: var(--header-height);
 }
-
-.main-title {
-  height: 100vh;
-}
 </style>
