@@ -8,6 +8,7 @@
 
 <style scoped>
 .main-content {
-  padding-top: var(--header-height);
+  margin-top: var(--header-height);
+  padding-top: 24px;
 }
 </style>

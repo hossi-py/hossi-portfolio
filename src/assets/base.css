@@ -8,6 +8,7 @@
   --hover-border-color: #444;
   --card-bg: #ffffff;
   --header-height: 6rem;
+  --accent-color: #007bff;
 }
 
 /* 다크 모드 색상 변수 */
@@ -19,6 +20,7 @@
   --border-color: #444;
   --hover-border-color: #e2e8f0;
   --card-bg: #222;
+  --accent-color: #66ccff;
 }
 
 /* 다크 모드 전환 애니메이션 적용 */
