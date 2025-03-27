@@ -18,8 +18,15 @@ defineProps<{
     class="theme-icon"
     :class="{ 'is-dark': isDark }"
   >
-    <!-- glow 효과 적용 -->
     <defs>
+      <!-- 밝은 노란빛 그라데이션 -->
+      <radialGradient id="moon-gradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffffcc" stop-opacity="1" />
+        <stop offset="50%" stop-color="#fff666" stop-opacity="0.8" />
+        <stop offset="100%" stop-color="#ffe600" stop-opacity="0.6" />
+      </radialGradient>
+
+      <!-- 블러 효과는 유지 -->
       <filter id="moon-glow" width="200%" height="200%">
         <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
         <feMerge>
@@ -29,11 +36,14 @@ defineProps<{
       </filter>
     </defs>
 
-    <!-- 달 -->
     <g class="moon" :class="{ visible: isDark }">
-      <path d="M12 2a9 9 0 1 0 9 10 7 7 0 0 1-9-10z" filter="url(#moon-glow)" />
+      <path
+        d="M12 2a9 9 0 1 0 9 10 7 7 0 0 1-9-10z"
+        fill="url(#moon-gradient)"
+        filter="url(#moon-glow)"
+        stroke="none"
+      />
     </g>
-
     <!-- 해 -->
     <g class="sun" :class="{ visible: !isDark }">
       <circle cx="12" cy="12" r="5" />

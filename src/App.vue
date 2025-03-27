@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
+import Snowfall from './components/Snowfall.vue'
 import DefaultLayout from './layouts/DefaultLayout.vue'
 import customRoutes from './router/customRoutes'
+import { useThemeStore } from './stores/themeStore'
 
 const route = useRoute()
+
+const themeStore = useThemeStore()
+const { isDark, isSeasonThemeActive } = storeToRefs(themeStore)
 
 // 커스텀 경로인지 확인
 const isCustomRoute = computed(() =>
@@ -19,6 +25,8 @@ const layout = computed(() => {
 </script>
 
 <template>
+  <Snowfall v-if="isDark && isSeasonThemeActive" />
+
   <component :is="layout">
     <RouterView />
   </component>

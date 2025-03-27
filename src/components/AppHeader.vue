@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useAnimatedDepth } from '@/composables/animatedDepth'
-import { useDarkMode } from '@/composables/darkMode'
 import { useHoverWithMouse } from '@/composables/hover'
+import { useThemeStore } from '@/stores/themeStore'
+import { storeToRefs } from 'pinia'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import CustomIcon from './icons/CustomIcon.vue'
 import IconThemeToggle from './icons/IconThemeToggle.vue'
@@ -14,9 +15,43 @@ const svgWidth = ref(0)
 
 const targetDepth = computed(() => (isHover.value ? 20 : 0))
 
-const { isDark, toggleDarkMode } = useDarkMode()
+const themeStore = useThemeStore()
+const { isDark, isSeasonThemeActive } = storeToRefs(themeStore)
 const { isHover, mouseX, mouseY } = useHoverWithMouse(headerRef)
 const animatedDepth = useAnimatedDepth(targetDepth, 250)
+
+// SVG 경로 동적 계산
+const svgPath = computed(() => {
+  const width = svgWidth.value
+  if (width === 0) return ''
+
+  if (isDark.value) {
+    const left = Math.max(0, mouseX.value - curveWidth)
+    const right = Math.min(width, mouseX.value + curveWidth)
+    return `M0,0 L${left},0 Q${mouseX.value},${animatedDepth.value} ${right},0 L${width},0`
+  }
+  return `M0,0 L${width},0`
+})
+
+const svgPathFilter = computed(() => (isHover.value && isDark.value ? 'url(#border-glow)' : 'none'))
+
+const glowColor = computed(() => {
+  const x = mouseX.value
+  const y = mouseY.value
+
+  const hue = x % 360 // 0 ~ 360도 색상
+  const lightness = 60 + (y % 20) // 약간 부드러운 밝기
+
+  return `hsl(${hue}, 100%, ${lightness}%)`
+})
+
+const seasonThemeToggleImageSrc = computed(() =>
+  isDark.value ? '/images/snow-flake.png' : '/images/cherry-blossom.png',
+)
+
+const handleSeasonThemeActive = () => themeStore.toggleSeasonTheme()
+
+const handleThemeToggle = () => themeStore.toggleDarkMode()
 
 // header 너비 갱신 (윈도우 리사이즈 대응)
 const updateSvgWidth = () => {
@@ -33,29 +68,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', updateSvgWidth)
 })
-
-// SVG 경로 동적 계산
-const svgPath = computed(() => {
-  const width = svgWidth.value
-  if (width === 0) return ''
-
-  const left = Math.max(0, mouseX.value - curveWidth)
-  const right = Math.min(width, mouseX.value + curveWidth)
-
-  return `M0,0 L${left},0 Q${mouseX.value},${animatedDepth.value} ${right},0 L${width},0`
-})
-
-const svgPathFilter = computed(() => (isHover.value && isDark.value ? 'url(#border-glow)' : 'none'))
-
-const glowColor = computed(() => {
-  const x = mouseX.value
-  const y = mouseY.value
-
-  const hue = x % 360 // 0 ~ 360도 색상
-  const lightness = 60 + (y % 20) // 약간 부드러운 밝기
-
-  return `hsl(${hue}, 100%, ${lightness}%)`
-})
 </script>
 
 <template>
@@ -63,18 +75,29 @@ const glowColor = computed(() => {
     <div class="header-bg">
       <nav class="header-items">
         <div class="header-logo">
-          <span class="logo-text">MyApp</span>
+          <span v-show="false" class="logo-text">MyApp</span>
         </div>
 
-        <ul class="header-nav">
+        <ul v-show="false" class="header-nav">
           <li>Home</li>
           <li>About</li>
           <li>Contact</li>
         </ul>
 
         <div class="header-actions">
-          <CustomIcon @click="toggleDarkMode" active>
-            <IconThemeToggle :size="18" :is-dark="isDark" />
+          <!-- 벚꽃 / 눈송이 -->
+          <CustomIcon :active="isSeasonThemeActive" @click="handleSeasonThemeActive">
+            <img
+              :src="seasonThemeToggleImageSrc"
+              alt="season theme icon"
+              width="24px"
+              height="24px"
+            />
+          </CustomIcon>
+          <!-- 테마 변경 -->
+          <CustomIcon @click="handleThemeToggle">
+            <IconThemeToggle v-if="isDark" is-dark :size="18" />
+            <img v-else src="/images/sun.png" alt="light theme" width="24" height="24" />
           </CustomIcon>
         </div>
       </nav>
@@ -119,14 +142,14 @@ const glowColor = computed(() => {
   left: 0;
   width: 100%;
   height: var(--header-height);
-  z-index: 10;
+  z-index: 999;
   padding-bottom: 20px; /** curveDepth 값만큼 아래로 밀어줌 => header-items가 가운데 오도록 */
 }
 
 .header-bg {
   width: 100%;
   background: transparent;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
 }
 
 .header-items {
