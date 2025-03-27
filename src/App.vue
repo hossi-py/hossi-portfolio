@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
-import Snowfall from './components/Snowfall.vue'
+import SnowFall from './components/SnowFall.vue'
 import DefaultLayout from './layouts/DefaultLayout.vue'
 import customRoutes from './router/customRoutes'
 import { useThemeStore } from './stores/themeStore'
@@ -25,7 +25,7 @@ const layout = computed(() => {
 </script>
 
 <template>
-  <Snowfall v-if="isDark && isSeasonThemeActive" />
+  <SnowFall v-if="isDark && isSeasonThemeActive" />
 
   <component :is="layout">
     <RouterView />
