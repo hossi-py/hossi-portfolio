@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
+import CherryBlossomFall from './components/CherryBlossomFall.vue'
 import SnowFall from './components/SnowFall.vue'
 import DefaultLayout from './layouts/DefaultLayout.vue'
 import customRoutes from './router/customRoutes'
@@ -25,6 +26,7 @@ const layout = computed(() => {
 </script>
 
 <template>
+  <CherryBlossomFall v-if="!isDark && isSeasonThemeActive" :count="20" />
   <SnowFall v-if="isDark && isSeasonThemeActive" />
 
   <component :is="layout">
