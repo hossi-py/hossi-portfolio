@@ -31,7 +31,7 @@ function randomBetween(min: number, max: number) {
 
 <style scoped>
 .falling-petal {
-  position: fixed;
+  position: absolute;
   top: -10%;
   width: 24px;
   height: auto;
