@@ -1,9 +1,8 @@
 export type CustomButtonProps = {
-  icon?: string // (예시: 'search')
-  type?: 'primary' | 'secondary' | 'success' | 'danger'
-  size?: 'sm' | 'md' | 'lg'
+  label?: string
+  iconOnly?: boolean
+  size?: number | 'small' | 'medium' | 'large'
+  rounded?: boolean
   loading?: boolean
-  loadingSize?: number
-  minWidth?: number
   disabled?: boolean
 }

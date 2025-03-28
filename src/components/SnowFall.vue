@@ -11,8 +11,8 @@ const maxFlakes = 200
 let ground: number[] = [] // 바닥 각 x좌표별 눈 높이 정보 저장
 
 const snowImages = [new Image(), new Image()]
-snowImages[0].src = '/images/snow-1.png'
-snowImages[1].src = '/images/snow-2.png'
+snowImages[0].src = '/src/assets/images/snow-1.png'
+snowImages[1].src = '/src/assets/images/snow-2.png'
 
 class Snowflake {
   x!: number

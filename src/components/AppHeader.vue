@@ -46,7 +46,7 @@ const glowColor = computed(() => {
 })
 
 const seasonThemeToggleImageSrc = computed(() =>
-  isDark.value ? '/images/snow-flake.png' : '/images/cherry-blossom.png',
+  isDark.value ? '/src/assets/images/snow-flake.png' : '/src/assets/images/cherry-blossom.png',
 )
 
 const handleSeasonThemeActive = () => themeStore.toggleSeasonTheme()
@@ -97,7 +97,7 @@ onUnmounted(() => {
           <!-- 테마 변경 -->
           <CustomIcon @click="handleThemeToggle">
             <IconThemeToggle v-if="isDark" is-dark :size="18" />
-            <img v-else src="/images/sun.png" alt="light theme" width="24" height="24" />
+            <img v-else src="/src/assets/images/sun.png" alt="light theme" width="24" height="24" />
           </CustomIcon>
         </div>
       </nav>

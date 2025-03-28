@@ -3,7 +3,7 @@ import { computed } from 'vue'
 
 const imageUrl = computed(() => {
   const num = Math.floor(Math.random() * 5) + 1
-  return `/images/cherry-blossom-leaf-${num}.png`
+  return `/src/assets/images/cherry-blossom-leaf-${num}.png`
 })
 
 const petalStyle = computed(() => {

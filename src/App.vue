@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
-import { RouterView, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import CherryBlossomFall from './components/CherryBlossomFall.vue'
 import SnowFall from './components/SnowFall.vue'
 import DefaultLayout from './layouts/DefaultLayout.vue'

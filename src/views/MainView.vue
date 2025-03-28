@@ -1,14 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main class="main-content">
-    <div class="main-title">메인 화면</div>
-  </main>
+  <div class="main-view">
+    <h1 class="title">메인 화면</h1>
+    <p>여기는 메인 컨텐츠 영역입니다.</p>
+  </div>
 </template>
 
-<style scoped>
-.main-content {
-  margin-top: var(--header-height);
-  padding-top: 24px;
-}
-</style>
+<style scoped></style>
